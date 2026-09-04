@@ -1,16 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="ni.edu.uam.distribuidoragueguense.controllers.DistribuidoraController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<VBox prefHeight="600.0" prefWidth="800.0" spacing="8.0"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ni.edu.uam.distribuidoragueguense.controller.ProductoController">
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
+    <MenuBar>
+        <menus>
+            <Menu text="Archivo">
+                <items>
+                    <MenuItem text="Nuevo" onAction="#nuevoProducto">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                        </accelerator>
+                    </MenuItem>
+                    <MenuItem text="Limpiar" onAction="#limpiarFormulario" />
+                    <SeparatorMenuItem />
+                    <MenuItem text="Salir" onAction="#salirAplicacion">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                        </accelerator>
+                    </MenuItem>
+                </items>
+            </Menu>
+            <Menu text="Producto">
+                <items>
+                    <MenuItem text="Guardar" onAction="#guardarProducto">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                        </accelerator>
+                    </MenuItem>
+                    <MenuItem text="Editar" onAction="#cargarProductoParaEditar" />
+                    <MenuItem text="Eliminar" onAction="#eliminarProducto" />
+                </items>
+            </Menu>
+            <Menu text="Ayuda">
+                <items>
+                    <MenuItem text="Acerca de" onAction="#mostrarAcercaDe" />
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
+
+    <ToolBar>
+        <items>
+            <Button text="Nuevo" onAction="#nuevoProducto" />
+            <Button text="Guardar" onAction="#guardarProducto" />
+            <Button text="Editar" onAction="#cargarProductoParaEditar" />
+            <Button text="Eliminar" onAction="#eliminarProducto" />
+        </items>
+    </ToolBar>
+
+    <VBox spacing="10.0" VBox.vgrow="ALWAYS">
+        <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+        </padding>
+
+        <TitledPane collapsible="false" text="Datos del Producto">
+            <content>
+                <GridPane hgap="10.0" vgap="8.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" minWidth="80.0" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints hgrow="NEVER" minWidth="80.0" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+
+                    <children>
+                        <Label text="Código:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="txtCodigo" promptText="Ej: PROD-01" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                        <Label text="Nombre:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                        <TextField fx:id="txtNombre" promptText="Nombre del producto" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                        <Label text="Categoría:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtCategoria" promptText="Ej: Abarrotes" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                        <Label text="Precio (C$):" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtPrecio" promptText="0.00" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+                        <Label text="Existencia:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtExistencia" promptText="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    </children>
+                </GridPane>
+            </content>
+        </TitledPane>
+
+        <TableView fx:id="tablaProductos" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colCodigo" prefWidth="120.0" text="Código" />
+                <TableColumn fx:id="colNombre" prefWidth="220.0" text="Nombre" />
+                <TableColumn fx:id="colCategoria" prefWidth="150.0" text="Categoría" />
+                <TableColumn fx:id="colPrecio" prefWidth="120.0" text="Precio" />
+                <TableColumn fx:id="colExistencia" prefWidth="100.0" text="Existencia" />
+            </columns>
+            <contextMenu>
+                <ContextMenu>
+                    <items>
+                        <MenuItem text="Editar producto" onAction="#cargarProductoParaEditar" />
+                        <MenuItem text="Eliminar producto" onAction="#eliminarProducto" />
+                        <SeparatorMenuItem />
+                        <MenuItem text="Ver detalle" onAction="#verDetalleProducto" />
+                    </items>
+                </ContextMenu>
+            </contextMenu>
+        </TableView>
+
+        <HBox style="-fx-background-color: #e0e0e0; -fx-padding: 5px; -fx-background-radius: 3px;">
+            <children>
+                <Label fx:id="lblMensaje" text="Estado: Listo" textFill="#333333">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+    </VBox>
 </VBox>
